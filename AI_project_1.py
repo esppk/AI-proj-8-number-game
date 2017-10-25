@@ -105,6 +105,7 @@ def DFS(start):
     g_dict = dict()
     g_dict[tuple(start)] = None
     move = ["right", "left","down","up"]
+#    for k in range(10000):
     while(frontier is not []):
         current = frontier.pop()
         if current == goal:
@@ -124,7 +125,7 @@ def DFS(start):
         neighbor.reverse()
         for i,neib in enumerate(neighbor):
             if neib is not None:
-                if (tuple(neib) not in g_dict.keys())&(neib not in frontier):
+                if (tuple(neib) not in g_dict.keys()):
                     g_dict[tuple(neib)] = (move[i], tuple(current))
                     frontier.append(neib)
             
@@ -171,7 +172,7 @@ def BFS(start):
         neighbor.reverse()
         for i,neib in enumerate(neighbor):
             if neib is not None:
-                if (tuple(neib) not in g_dict.keys())&(neib not in frontier):
+                if (tuple(neib) not in g_dict.keys()):
                     g_dict[tuple(neib)] = (move[i], tuple(current))
                     frontier.add(neib)
             
@@ -181,12 +182,17 @@ def BFS(start):
     
 #%%
 
-        
+dfs_path = DFS([1,2,5,3,4,0,6,7,8])        
     
 
 
+#%%
+from time import time
+t0 = time()
+dfs_path = DFS([1,2,5,3,4,0,6,7,8]) 
+t1 = time()
 
-
+print (t1-t0)
 
 
 
