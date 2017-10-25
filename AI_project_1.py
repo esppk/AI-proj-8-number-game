@@ -133,49 +133,48 @@ def DFS(start):
 #%%
 class Queue(list):
     def __init__(self,list):
-        self.value = list
+        self.value = [list]
     def add(self,elem):
         self.value.append(elem)
     def pop(self):
-        
         return self.value.pop(0)
     
         
  #%%
-def BFS(state):
+def BFS(start):
     #state object
-    s = state
+    #state object
+    st = State(start)
+    s = start
     goal = [0,1,2,3,4,5,6,7,8]
     #only frontier consist of node objects
-    frontier = Queue([node(s.num)])
-    front_states = Queue([s.num])
-    visited = []
-    move = ["down","up","right", "left"]
-    while(frontier.value is not []):
-        
+    frontier = Queue(s)
+    g_dict = dict()
+    g_dict[tuple(start)] = None
+    move = ["right", "left", "down", "up"]
+    while(frontier is not []):
         current = frontier.pop()
-        visited.append(current.pos)
-        
-        if current.pos == goal:
-            path = [current.move]
-            pa = current.parent 
-            while pa != None:
-                path.append(pa.move)
-                pa = pa.parent
+        if current == goal:
+            path = []
+            current = (0,tuple(current))
+            while(True):
+                
+                current = g_dict[current[1]]
+                if current == None:
+                    break
+                path.append(current[0])
+               
             path.reverse()
-            return("success", path)
-            break
-        
+            return ("Success", path)
         #generate neighbor
-        gen = State(current.pos)
-        neighbor = gen.neighbor()
-        for neib in neighbor:
-            if (neib not in visited)&(neib not in front_states.value)& (neib != None):
-                front_states.pop()
-                frontier.add(node(neib))
-                front_states.add(neib)
-                frontier.value[-1].parent = current
-                frontier.value[-1].move = move[neighbor.index(neib)]
+        neighbor = st.neighbor(current)
+        neighbor.reverse()
+        for i,neib in enumerate(neighbor):
+            if neib is not None:
+                if (tuple(neib) not in g_dict.keys())&(neib not in frontier):
+                    g_dict[tuple(neib)] = (move[i], tuple(current))
+                    frontier.add(neib)
+            
   
     return("failure")    
         
