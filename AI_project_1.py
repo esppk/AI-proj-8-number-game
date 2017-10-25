@@ -104,7 +104,7 @@ def DFS(start):
     frontier = [s]
     g_dict = dict()
     g_dict[tuple(start)] = None
-    move = ["up","down","left","right"]
+    move = ["right", "left","down","up"]
     while(frontier is not []):
         current = frontier.pop()
         if current == goal:
@@ -118,7 +118,7 @@ def DFS(start):
                 path.append(current[0])
                
             path.reverse()
-            return ("True", path)
+            return ("Success", path)
         #generate neighbor
         neighbor = st.neighbor(current)
         neighbor.reverse()
